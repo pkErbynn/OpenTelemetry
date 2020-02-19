@@ -44,6 +44,14 @@ dependencies {
 	compile group: 'io.jaegertracing', name: 'jaeger-client', version:'0.33.1'
 
 	compile group: 'io.jaegertracing', name: 'jaeger-core', version: '1.1.0'
+	compile group: 'io.opentelemetry', name: 'opentelemetry-sdk', version: '0.2.0'
+	compile group: 'io.opentelemetry', name: 'opentelemetry-api', version: '0.2.0'
+	compile group: 'io.opentelemetry', name: 'opentelemetry-exporters-inmemory', version: '0.2.0'
+	compile group: 'io.opentelemetry', name: 'opentelemetry-exporters-logging', version: '0.2.0'
+	compile group: 'io.opentelemetry', name: 'opentelemetry-exporters-jaeger', version: '0.2.0'
+	compile group: 'io.grpc', name: 'grpc-protobuf', version: '1.27.1'
+	compile group: 'io.grpc', name: 'grpc-netty-shaded', version: '1.27.1'
+
 
 }
 
