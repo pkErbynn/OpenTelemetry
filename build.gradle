@@ -1,0 +1,52 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'io.turntabl'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'commons-codec:commons-codec:1.14'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.security:spring-security-test'
+	compile("io.springfox:springfox-swagger2:2.9.2")
+	compile("io.springfox:springfox-swagger-ui:2.9.2")
+	compile("com.google.api-client:google-api-client:1.30.7")
+
+	compile 'com.google.api-client:google-api-client:1.30.5'
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.4")
+
+    compile 'io.jsonwebtoken:jjwt-api:0.10.7'
+    runtime 'io.jsonwebtoken:jjwt-impl:0.10.7',
+            'io.jsonwebtoken:jjwt-jackson:0.10.7'
+
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.1'
+    compile 'com.google.api-client:google-api-client:1.30.7'
+
+//	compile group: 'org.springframework.security', name: 'spring-security-core', version: '3.0.2.RELEASE'
+//	compile group: 'org.springframework', name: 'spring-webmvc', version: '5.2.3.RELEASE'
+
+//	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.4.RELEASE'
+//	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.2.4.RELEASE'
+
+    compile('io.opentelemetry:opentelemetry-api:0.2.0-SNAPSHOT')
+	compile group: 'io.jaegertracing', name: 'jaeger-client', version:'0.33.1'
+
+	compile group: 'io.jaegertracing', name: 'jaeger-core', version: '1.1.0'
+
+}
+
+test {
+	useJUnitPlatform()
+}
