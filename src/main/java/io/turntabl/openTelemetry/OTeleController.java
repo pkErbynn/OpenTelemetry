@@ -22,44 +22,30 @@ import org.springframework.web.bind.annotation.*;
 public class OTeleController {
 
     @CrossOrigin
-    @ApiOperation("with openTele")
-    @GetMapping(value = "v1/api/ot")
-    public String withOpenTele(){
+    @ApiOperation("get all projects")
+    @GetMapping(value = "v1/api/project")
+    public String getProject(){
+       // Configure the JaegerExporter as our exporter.
         SpanProcessor spanProcessor = SimpleSpansProcessor.newBuilder(JaegerGrpcSpanExporter.newBuilder()
-        .setServiceName("OpenTeleService")
+        .setServiceName("ProjectService")
         .setChannel(ManagedChannelBuilder.forAddress("localhost", 14250)
         .usePlaintext().build())
                 .build()).build();
         OpenTelemetrySdk.getTracerFactory().addSpanProcessor(spanProcessor);
-        Tracer tracer = OpenTelemetrySdk.getTracerFactory().get("otelExample");
 
-        // operation or span name in jaegar
-        Span span = tracer.spanBuilder("OTSpan::1").startSpan();
+        // adding span
+        Tracer tracer = OpenTelemetrySdk.getTracerFactory().get("OTController");
+        Span span = tracer.spanBuilder("Get All Project").startSpan();
         // tags -> for filtering....setAttribute == setTag in OpenTracing
         span.setAttribute("operation.id", 7);
-        span.setAttribute("project.id", 7);
-        span.setAttribute("ErbynnKeyTest", "someOperation");
+        span.setAttribute("project.id", 5);
         span.setAttribute("span.request.method", "GET");
-        // logs in jaeger
+        span.setAttribute("ErbynAttribute", "someOperation");
+        // shows as logs in jaeger..specific messages emitted by a process or service.
         span.addEvent("operation.request_started");
-
-        try (Scope scope = tracer.withSpan(span))
-        {
-            Span childSpan = tracer.spanBuilder("OTSpan::2").startSpan();
-            childSpan.setAttribute("operation.id", 9);
-            childSpan.addEvent("operation.request_started");
-
-            try (Scope childScope = tracer.withSpan(childSpan)) {
-            } finally {
-                childSpan.end();
-            }
-
-        } finally {
-            span.end();
-        }
-
+        span.addEvent("operation.request_complete");
+        span.end();
         spanProcessor.shutdown();
-
-        return "Hello from opTele endpoint";
+        return "All projects :)";
     }
 }
