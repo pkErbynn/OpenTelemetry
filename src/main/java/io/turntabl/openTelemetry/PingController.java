@@ -53,9 +53,16 @@ public class PingController {
         OpenTelemetrySdk.getTracerFactory().addSpanProcessor(spanProcessor);
 
         Tracer tracer = OpenTelemetrySdk.getTracerFactory().get("otelExample");
+
+        // operation or span name in jaegar
         Span span = tracer.spanBuilder("OTSpan::1").startSpan();
+        // tags -> for filtering....setAttribute == setTag in OpenTracing
         span.setAttribute("operation.id", 7);
+        span.setAttribute("ErbynnKeyTest", this.ping());
+        span.setAttribute("span.request.method", "GET");
+        // logs in jaeger
         span.addEvent("operation.request_started");
+        span.addEvent( this.ping());
 
         try (Scope scope = tracer.withSpan(span))
         {
