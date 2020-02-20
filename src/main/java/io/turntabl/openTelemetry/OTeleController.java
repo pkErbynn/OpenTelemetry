@@ -15,15 +15,11 @@ import io.opentelemetry.trace.Tracer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 @Api
 @RestController
-public class PingController {
+public class OTeleController {
 
     @CrossOrigin
     @ApiOperation("with openTele")
@@ -35,7 +31,6 @@ public class PingController {
         .usePlaintext().build())
                 .build()).build();
         OpenTelemetrySdk.getTracerFactory().addSpanProcessor(spanProcessor);
-
         Tracer tracer = OpenTelemetrySdk.getTracerFactory().get("otelExample");
 
         // operation or span name in jaegar
