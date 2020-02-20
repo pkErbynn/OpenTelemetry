@@ -25,20 +25,18 @@ import java.util.logging.SimpleFormatter;
 @RestController
 public class PingController {
 
-    @Autowired
-    JaegerTracer jaegerTracer;
+//    @Autowired
+//    JaegerTracer jaegerTracer;
 
-    private static final Logger logger = Logger.getLogger(PingController.class.getName());
-
-    @CrossOrigin
-    @ApiOperation("test pong")
-    @GetMapping(value = "v1/api/ping")
-    public String ping(){
-        JaegerSpan span = jaegerTracer.buildSpan("Get from Ping").start();
-        span.setTag("pong", "pongService" );
-        span.finish();
-        return "Hello from Ping endpoint";
-    }
+//    @CrossOrigin
+//    @ApiOperation("test pong")
+//    @GetMapping(value = "v1/api/ping")
+//    public String ping(){
+//        JaegerSpan span = jaegerTracer.buildSpan("Get from Ping").start();
+//        span.setTag("pong", "pongService" );
+//        span.finish();
+//        return "Hello from Ping endpoint";
+//    }
 
     @CrossOrigin
     @ApiOperation("with openTele")
@@ -49,7 +47,6 @@ public class PingController {
         .setChannel(ManagedChannelBuilder.forAddress("localhost", 14250)
         .usePlaintext().build())
                 .build()).build();
-
         OpenTelemetrySdk.getTracerFactory().addSpanProcessor(spanProcessor);
 
         Tracer tracer = OpenTelemetrySdk.getTracerFactory().get("otelExample");
@@ -58,23 +55,19 @@ public class PingController {
         Span span = tracer.spanBuilder("OTSpan::1").startSpan();
         // tags -> for filtering....setAttribute == setTag in OpenTracing
         span.setAttribute("operation.id", 7);
-        span.setAttribute("ErbynnKeyTest", this.ping());
+        span.setAttribute("project.id", 7);
+        span.setAttribute("ErbynnKeyTest", "someOperation");
         span.setAttribute("span.request.method", "GET");
         // logs in jaeger
         span.addEvent("operation.request_started");
-        span.addEvent( this.ping());
 
         try (Scope scope = tracer.withSpan(span))
         {
-            logger.info(tracer.getCurrentSpan().toString());
-
             Span childSpan = tracer.spanBuilder("OTSpan::2").startSpan();
             childSpan.setAttribute("operation.id", 9);
             childSpan.addEvent("operation.request_started");
 
             try (Scope childScope = tracer.withSpan(childSpan)) {
-                logger.info("Active Span: " + tracer.getCurrentSpan());
-
             } finally {
                 childSpan.end();
             }
