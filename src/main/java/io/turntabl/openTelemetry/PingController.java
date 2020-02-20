@@ -25,19 +25,6 @@ import java.util.logging.SimpleFormatter;
 @RestController
 public class PingController {
 
-//    @Autowired
-//    JaegerTracer jaegerTracer;
-
-//    @CrossOrigin
-//    @ApiOperation("test pong")
-//    @GetMapping(value = "v1/api/ping")
-//    public String ping(){
-//        JaegerSpan span = jaegerTracer.buildSpan("Get from Ping").start();
-//        span.setTag("pong", "pongService" );
-//        span.finish();
-//        return "Hello from Ping endpoint";
-//    }
-
     @CrossOrigin
     @ApiOperation("with openTele")
     @GetMapping(value = "v1/api/ot")

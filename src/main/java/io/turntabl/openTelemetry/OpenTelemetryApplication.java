@@ -21,7 +21,7 @@ public class OpenTelemetryApplication {
 		SpringApplication.run(OpenTelemetryApplication.class, args);
 	}
 
-	// config serviceName
+	// config serviceName for OTController
 //    @Bean
 //    public static JaegerTracer getTracer() {
 //        Configuration.SamplerConfiguration samplerConfig = Configuration.SamplerConfiguration.fromEnv().withType("const").withParam(1);
@@ -30,13 +30,5 @@ public class OpenTelemetryApplication {
 //        return config.getTracer();
 //    }
 
-
-//    @Bean
-//    public Tracer jaegerTracer(){
-//        Configuration.SamplerConfiguration samplerConfig = Configuration.SamplerConfiguration.fromEnv().withType("const").withParam(1);
-//        Configuration.ReporterConfiguration reporterConfig = Configuration.ReporterConfiguration.fromEnv().withLogSpans(true);
-//        Configuration config = new Configuration("APIGatewayServiceTelemetry").withSampler(samplerConfig).withReporter(reporterConfig);
-//        return config.getTracer();
-//    }
 
 }
