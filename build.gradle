@@ -42,7 +42,6 @@ dependencies {
 
     compile('io.opentelemetry:opentelemetry-api:0.2.0-SNAPSHOT')
 	compile group: 'io.jaegertracing', name: 'jaeger-client', version:'0.33.1'
-
 	compile group: 'io.jaegertracing', name: 'jaeger-core', version: '1.1.0'
 	compile group: 'io.opentelemetry', name: 'opentelemetry-sdk', version: '0.2.0'
 	compile group: 'io.opentelemetry', name: 'opentelemetry-api', version: '0.2.0'

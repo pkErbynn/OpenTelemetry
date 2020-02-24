@@ -1,4 +1,4 @@
-package io.turntabl.openTelemetry;
+package io.turntabl.openTelemetry.config;
 
 import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.exporters.jaeger.JaegerGrpcSpanExporter;
@@ -20,12 +20,9 @@ public class OTConfig {
 
     public static SpanProcessor spanConfig(){
         return SimpleSpansProcessor.newBuilder(JaegerGrpcSpanExporter.newBuilder()
-                .setServiceName("ProjectService")
+                .setServiceName("OpenTelemetryService")
                 .setChannel(ManagedChannelBuilder.forAddress("localhost", 14250)
                         .usePlaintext().build())
                 .build()).build();
     }
-
-
-
 }

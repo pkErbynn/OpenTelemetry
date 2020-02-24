@@ -8,6 +8,7 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.trace.SpanProcessor;
 import io.opentelemetry.sdk.trace.export.SimpleSpansProcessor;
 import io.opentelemetry.trace.Tracer;
+import io.turntabl.openTelemetry.serviceImpl.OTeleServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,4 +21,10 @@ public class OpenTelemetryApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OpenTelemetryApplication.class, args);
 	}
+
+    @Bean
+    public OTeleServiceImpl getoTeleService(){
+        return new OTeleServiceImpl();
+    }
+
 }
