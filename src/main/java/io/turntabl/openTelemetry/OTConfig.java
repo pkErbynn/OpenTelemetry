@@ -12,18 +12,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OTConfig {
 
-    public static Tracer observabilityConfig(){
-      // Configure the JaegerExporter as our exporter.
-        SpanProcessor spanProcessor = SimpleSpansProcessor.newBuilder(JaegerGrpcSpanExporter.newBuilder()
-        .setServiceName("ProjectService")
-        .setChannel(ManagedChannelBuilder.forAddress("localhost", 14250)
-        .usePlaintext().build())
-                .build()).build();
+    public static Tracer observabilityConfig(SpanProcessor spanProcessor){
         TracerSdkFactory tracerFactory = OpenTelemetrySdk.getTracerFactory();
         tracerFactory.addSpanProcessor(spanProcessor);
-        Tracer tracer = tracerFactory.get("OTController");
-        return tracer;
+        return tracerFactory.get("OTController");
+    }
 
+    public static SpanProcessor spanConfig(){
+        return SimpleSpansProcessor.newBuilder(JaegerGrpcSpanExporter.newBuilder()
+                .setServiceName("ProjectService")
+                .setChannel(ManagedChannelBuilder.forAddress("localhost", 14250)
+                        .usePlaintext().build())
+                .build()).build();
     }
 
 

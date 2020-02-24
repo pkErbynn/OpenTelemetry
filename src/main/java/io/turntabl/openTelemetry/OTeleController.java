@@ -31,7 +31,8 @@ public class OTeleController {
     @ApiOperation("get all projects")
     @GetMapping(value = "api/v1/project")
     public String getProject(){
-        Tracer tracer = OTConfig.observabilityConfig();
+        SpanProcessor spanProcessor = OTConfig.spanConfig();
+        Tracer tracer = OTConfig.observabilityConfig(spanProcessor);
 
         // adding span
         Span span = tracer.spanBuilder("Get All Project").startSpan();
@@ -43,7 +44,8 @@ public class OTeleController {
         span.addEvent("operation.request_started");
         span.addEvent("operation.request_complete");
         span.end();
-//        spanProcessor.shutdown();
+
+        spanProcessor.shutdown();
 
         return "All projects :)";
     }
