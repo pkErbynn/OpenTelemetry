@@ -15,15 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @Api
 @RestController
 public class OTeleController {
+    SpanProcessor spanProcessor = OTConfig.spanConfig();
+    Tracer tracer = OTConfig.observabilityConfig(spanProcessor);
 
     @Autowired
     OTeleServiceImpl oTeleService;
 
     @GetMapping("api/v1/ot")
     public String getOpenTelemetry() {
-        SpanProcessor spanProcessor = OTConfig.spanConfig();
-        Tracer tracer = OTConfig.observabilityConfig(spanProcessor);
-
         Span span = tracer.spanBuilder("ooop").startSpan();
         span.setAttribute("operation.id", 111);
         span.addEvent("operation.111");
