@@ -24,6 +24,7 @@ public class OTConfig {
         return SimpleSpansProcessor.newBuilder(JaegerGrpcSpanExporter.newBuilder()
                 .setServiceName("OpenTelemetryService")
                 .setChannel(ManagedChannelBuilder.forAddress("localhost", 14250)
+//                .setChannel(ManagedChannelBuilder.forAddress("localhost", 6831)
                         .usePlaintext().build())
                 .build()).build();
     }
