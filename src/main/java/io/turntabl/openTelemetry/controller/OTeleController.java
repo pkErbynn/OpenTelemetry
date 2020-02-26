@@ -21,7 +21,7 @@ public class OTeleController {
     @Autowired
     OTeleServiceImpl oTeleService;
 
-    @GetMapping("api/v1/ott")
+    @GetMapping("api/v1/ot")
     public String getOpenTelemetry() {
         Span span = tracer.spanBuilder("ooop").startSpan();
         span.setAttribute("operation.id", 111);
