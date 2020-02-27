@@ -24,16 +24,17 @@ public class OTeleServiceImpl {
 //        }
 
         Span span = tracer.buildSpan("inside").start();
-        span.log("myLogs");
-        span.setTag("myTagKey", 23);
-        System.out.println("before scope.........");
-//        try (Scope scope = (Scope) tracer.scopeManager().activate(span)) {
-//        } catch(Exception ex) {
-//            System.out.println("inside exception");
-//            ex.printStackTrace();
-//        } finally {
-//            span.finish();
-//        }
+//        span.log("myLogs");
+//        span.setTag("myTagKey", 23);
+//        System.out.println("before scope.........");
+        try (Scope scope = (Scope) tracer.scopeManager().activate(span)) {
+        } catch(Exception ex) {
+            System.out.println("inside exception");
+            ex.printStackTrace();
+        } finally
+        {
+            span.finish();
+        }
         return "Hey from OpenTelemetry :)";
     }
 }

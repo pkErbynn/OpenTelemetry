@@ -12,17 +12,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class OpenTelemetryApplication {
 
 	public static void main(String[] args) {
-        System.out.println("System:: " + System.getenv("JAEGER_SAMPLER_MANAGER_HOST_PORT"));
 		SpringApplication.run(OpenTelemetryApplication.class, args);
-        System.out.println("System:: " + System.getenv("JAEGER_SAMPLER_MANAGER_HOST_PORT"));
 	}
-
-//    @Bean
-//    public io.opentracing.Tracer initTracer() {
-//        Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration().withType("const").withParam(1);
-//        Configuration.ReporterConfiguration reporterConfig = new Configuration.ReporterConfiguration().withLogSpans(true);
-//        return new Configuration("OpenTracingService").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
-//    }
 
     @Bean
     public io.opentracing.Tracer initTracer() {
