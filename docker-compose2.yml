@@ -7,8 +7,7 @@
 #      thrift_compact:
 #      thrift_binary:
 #exporters:
-#  jaeger_grpc:
-#    endpoint: "http://localhost:14250"
+#  jaeger_grpc:#    endpoint: "http://localhost:14250"
 #extensions:
 #  health_check: {}
 #    pprof: {}

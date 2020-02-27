@@ -23,8 +23,10 @@ public class OpenTelemetryApplication {
 	}
 
     @Bean
-    public OTeleServiceImpl getoTeleService(){
-        return new OTeleServiceImpl();
+    public io.opentracing.Tracer initTracer() {
+        Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration().withType("const").withParam(1);
+        Configuration.ReporterConfiguration reporterConfig = new Configuration.ReporterConfiguration().withLogSpans(true);
+        return new Configuration("java-6-hello").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
     }
 
 }

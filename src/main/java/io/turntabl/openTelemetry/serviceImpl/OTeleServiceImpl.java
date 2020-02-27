@@ -5,11 +5,7 @@ import io.opentelemetry.trace.Tracer;
 
 
 public class OTeleServiceImpl {
-    public String getOpenTelemetry(Tracer tracer){
-        Span childSpan = tracer.spanBuilder("teeee").startSpan();
-        childSpan.setAttribute("operation.id", 222);
-        childSpan.addEvent("operation.222");
-        childSpan.end();
+    public String getOpenTelemetry(){
         return "Hey from OpenTelemetry :)";
     }
 }
