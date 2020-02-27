@@ -12,7 +12,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class OpenTelemetryApplication {
 
 	public static void main(String[] args) {
+        System.out.println("System:: " + System.getenv("JAEGER_SAMPLER_MANAGER_HOST_PORT"));
 		SpringApplication.run(OpenTelemetryApplication.class, args);
+        System.out.println("System:: " + System.getenv("JAEGER_SAMPLER_MANAGER_HOST_PORT"));
 	}
 
 //    @Bean

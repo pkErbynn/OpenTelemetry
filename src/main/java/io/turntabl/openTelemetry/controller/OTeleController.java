@@ -31,7 +31,7 @@ public class OTeleController {
     @GetMapping("api/v1/ot")
     public String getOpenTracing() {
         Span span = tracer.buildSpan("someWork").start();
-        try (Scope scope = (Scope) tracer.scopeManager().activate(span)) {
+        try (Scope ignored = (Scope) tracer.scopeManager().activate(span)) {
             // Do things.
         } catch(Exception ex) {
 //            Tags.ERROR.set(span, true);
