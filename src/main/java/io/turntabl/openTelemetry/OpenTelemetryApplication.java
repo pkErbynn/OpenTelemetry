@@ -22,10 +22,17 @@ public class OpenTelemetryApplication {
 //                com.uber.jaeger.Configuration.ReporterConfiguration.fromEnv()).getTracer();
 //    }
 
+//    @Bean
+//    public io.opentracing.Tracer initTracer() {
+//        Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration().withType("const").withParam(1);
+//        Configuration.ReporterConfiguration reporterConfig = new Configuration.ReporterConfiguration().withLogSpans(true);
+//        return new Configuration("OpenTracingService").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
+//    }
+
     @Bean
     public io.opentracing.Tracer initTracer() {
-        Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration().withType("const").withParam(1);
-        Configuration.ReporterConfiguration reporterConfig = new Configuration.ReporterConfiguration().withLogSpans(true);
+        Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration().fromEnv();
+        Configuration.ReporterConfiguration reporterConfig = new Configuration.ReporterConfiguration().fromEnv();
         return new Configuration("OpenTracingService").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
     }
 
