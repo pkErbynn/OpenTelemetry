@@ -1,13 +1,6 @@
 package io.turntabl.openTelemetry;
 
-import io.grpc.ManagedChannelBuilder;
 import io.jaegertracing.Configuration;
-import io.jaegertracing.internal.JaegerTracer;
-import io.opentelemetry.exporters.jaeger.JaegerGrpcSpanExporter;
-import io.opentelemetry.sdk.OpenTelemetrySdk;
-import io.opentelemetry.sdk.trace.SpanProcessor;
-import io.opentelemetry.sdk.trace.export.SimpleSpansProcessor;
-import io.opentelemetry.trace.Tracer;
 import io.turntabl.openTelemetry.serviceImpl.OTeleServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,11 +15,21 @@ public class OpenTelemetryApplication {
 		SpringApplication.run(OpenTelemetryApplication.class, args);
 	}
 
+//    @Bean
+//    public io.opentracing.Tracer jaegerTracer() {
+//        return new com.uber.jaeger.Configuration("basic-ui",
+//                com.uber.jaeger.Configuration.SamplerConfiguration.fromEnv(),
+//                com.uber.jaeger.Configuration.ReporterConfiguration.fromEnv()).getTracer();
+//    }
+
     @Bean
     public io.opentracing.Tracer initTracer() {
         Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration().withType("const").withParam(1);
         Configuration.ReporterConfiguration reporterConfig = new Configuration.ReporterConfiguration().withLogSpans(true);
-        return new Configuration("java-6-hello").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
+        return new Configuration("OpenTracingService").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
     }
+
+    @Bean
+    public OTeleServiceImpl getTrace(){return new OTeleServiceImpl();}
 
 }

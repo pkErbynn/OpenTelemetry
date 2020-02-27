@@ -7,7 +7,7 @@ import io.opentracing.Tracer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-import io.turntabl.openTelemetry.config.OTConfig;
+//import io.turntabl.openTelemetry.config.OTConfig;
 import io.turntabl.openTelemetry.serviceImpl.OTeleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class OTeleController {
 
     @GetMapping("api/v1/ot")
     public String getOpenTracing() {
-        Span span = tracer.activeSpan();
+        Span span = tracer.buildSpan("get-mytracing").start();
 
         span.log("myLogs");
         span.setTag("myTagKey", 23);
