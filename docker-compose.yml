@@ -6,13 +6,10 @@ services:
     ports:
       - "2020:2020"
     environment:
-      - JAEGER_SERVICE_NAME=myopentelemetryservice
+      - JAEGER_SERVICE_NAME=opentelemetryservice
       - JAEGER_AGENT_HOST=jaeger
       - JAEGER_AGENT_PORT=6831
-    depends_on:
-      - jaegertracing
-      restart: on-failure
-
+      - JAEGER_SAMPLER_MANAGER_HOST_PORT=jaeger:5778
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
