@@ -31,14 +31,14 @@ public class OTeleController {
     @GetMapping("api/v1/ott")
     public String getTracingWithoutTryBlock() {
         Span span = tracer.buildSpan("getOpenTracingWithoutTryBlock-A").start();
+        System.out.println("some work........");
         span.setTag("get_project_id", 11);
 
-        span.finish();
         return oTeleService.getTracingWithoutTryBlock(span);
     }
 
     @GetMapping("api/v1/nod")
-    public String noOpenTelemetry() {
+    public String simpleTrace() {
         Span span = tracer.buildSpan("DiscontinuousDownstreamTrace").start();
         span.setTag("get_project_id", 11);
         System.out.println("???????? Do some work ?????????????");

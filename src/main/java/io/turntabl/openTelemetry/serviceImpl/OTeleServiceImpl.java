@@ -28,14 +28,17 @@ public class OTeleServiceImpl {
     }
 
     public String getTracingWithoutTryBlock(Span iSpan){
-//        Span ChildSpan1 = tracer.buildSpan("getOpenTracingChild-1").asChildOf(span).start();
-//        ChildSpan1.setTag("get_child_project_id", 11.1);
-//        ChildSpan1.finish();
-
         Span ChildSpan1 = tracer.buildSpan("getOpenTracingWithoutTryBlock-B").asChildOf(iSpan).start();
         ChildSpan1.setTag("get_child_project_id", 11.1);
-        ChildSpan1.finish();
+        System.out.println("........");
 
+        Span ChildSpan2 = tracer.buildSpan("getOpenTracingWithoutTryBlock-C").asChildOf(ChildSpan1).start();
+        ChildSpan2.setTag("get_child_project_id", 11.1);
+        System.out.println(".......");
+
+        iSpan.finish();     // root span closes first followed by the subs accordingly
+        ChildSpan1.finish();
+        ChildSpan2.finish();
 
         return "Tracing without try-catch";
     }
