@@ -28,6 +28,14 @@ public class OTeleController {
         return oTeleService.getOpenTelemetry(span);
     }
 
+    @GetMapping("api/v1/ott")
+    public String getTracingWithoutTryBlock() {
+        Span span = tracer.buildSpan("getOpenTracingWithoutTryBlock-A").start();
+        span.setTag("get_project_id", 11);
+
+        span.finish();
+        return oTeleService.getTracingWithoutTryBlock(span);
+    }
 
     @GetMapping("api/v1/nod")
     public String noOpenTelemetry() {
