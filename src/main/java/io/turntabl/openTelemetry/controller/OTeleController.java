@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class OTeleController {
 
+
     @Autowired
     Tracer tracer;
 
@@ -21,45 +22,42 @@ public class OTeleController {
 
     @GetMapping("api/v1/ot")
     public String getOpenTracing() {
-//        Span span = tracer.buildSpan("getOpenTracing").start();
+//        Span span = tracer.buildSpan("HandleHTTPRequest").start();
 //        span.setTag("get_project_id", 11);
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
 //
-//        Span ChildSpan1 = tracer.buildSpan("getOpenTracingChild-1").asChildOf(span).start();
-//        ChildSpan1.setTag("get_child_project_id", 11.1);
-//        ChildSpan1.finish();
+//        try(Scope scope = tracer.activateSpan(span)){
+//            Span ChildSpan1 = tracer.buildSpan("ChildOfHttp").start();
+//            ChildSpan1.setTag("get_child_project_id", 11.1);
+//            System.out.println("..................");
 //
-//        Span ChildSpan2 = tracer.buildSpan("getOpenTracingChild-2").asChildOf(ChildSpan1).start();
-//        ChildSpan2.setTag("get_child_project_id", 11.12);
-//        ChildSpan2.finish();
+//            try(Scope scopeCild = tracer.activateSpan(ChildSpan1)){
+//                Span ChildSpan2 = tracer.buildSpan("ChildOfHttp").start();
+//                ChildSpan2.setTag("get_child_project_id", 11.1);
+//                System.out.println("?????????????????????");
+//                ChildSpan2.finish();
+//            }
 //
-//        Span fSpan = tracer.buildSpan("getOpenTracingChild-fSpan").asChildOf(ChildSpan2).start();
-//        fSpan.setTag("get_child_project_id", 11.2);
-//        fSpan.finish();
-//
+//            ChildSpan1.finish();
+//        }
 //        span.finish();
-//        --------------------------------------
 
+
+//        -------------------------------------
         Span span = tracer.buildSpan("HandleHTTPRequest").start();
-        span.setTag("get_project_id", 11);
+        try {
+            span.setTag("get_project_id", 11);
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
+            return oTeleService.getOpenTelemetry(span);
 
-        try(Scope scope = tracer.activateSpan(span)){
-            Span ChildSpan1 = tracer.buildSpan("ChildOfHttp").start();
-            ChildSpan1.setTag("get_child_project_id", 11.1);
-            System.out.println("..................");
-
-            try(Scope scopeCild = tracer.activateSpan(ChildSpan1)){
-                Span ChildSpan2 = tracer.buildSpan("ChildOfHttp").start();
-                ChildSpan2.setTag("get_child_project_id", 11.1);
-                System.out.println("?????????????????????");
-                ChildSpan2.finish();
-            }
-
-            ChildSpan1.finish();
         }
-        span.finish();
-        return oTeleService.getOpenTelemetry();}
+        finally {
+            span.finish();
+        }
+
+    }
+
 
     @GetMapping("api/v1/noot")
     public String noOpenTelemetry() {

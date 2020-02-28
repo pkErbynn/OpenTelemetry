@@ -13,39 +13,16 @@ public class OTeleServiceImpl {
     @Autowired
     private Tracer tracer;
 
-    public static String getHello(){
-        return "JOhn Erbyn";
-    }
+    public String getOpenTelemetry(Span incomingSpan){
+        Span ChildSpan1 = null;
+        try (Scope scope = tracer.activateSpan(incomingSpan)) {
+            ChildSpan1 = tracer.buildSpan("ChildOfHttp").start();
+            ChildSpan1.setTag("get_child_project_id", 11.1);
+            System.out.println("..................");
+            return "Hey from OpenTelemetry :)";
 
-    public String getOpenTelemetry(){
-
-//       ` Span span = tracer.buildSpan("getOpenTracingService").start();
-//        span.log("mylog2");
-//
-////        try (Scope ignored =  tracer.scopeManager().activate(span)) {
-////            span.setTag("id", "try-with-resource");
-////        }
-//        span.finish();`
-
-
-//        span.setTag("get_project_id", 55);
-//        span.log("mylog");
-//        span.getBaggageItem("pk");
-//        span.finish();
-
-
-//        Span span = tracer.buildSpan("inside").start();
-////        span.log("myLogs");
-////        span.setTag("myTagKey", 23);
-////        System.out.println("before scope.........");
-//        try (Scope scope = (Scope) tracer.scopeManager().activate(span)) {
-//        } catch(Exception ex) {
-//            System.out.println("inside exception");
-//            ex.printStackTrace();
-//        } finally
-//        {
-//            span.finish();
-//        }
-        return "Hey from OpenTelemetry :)";
+        } finally {
+            ChildSpan1.finish();
+        }
     }
 }
