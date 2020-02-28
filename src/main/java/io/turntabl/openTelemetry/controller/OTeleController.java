@@ -45,16 +45,15 @@ public class OTeleController {
 
 //        -------------------------------------
         Span span = tracer.buildSpan("HandleHTTPRequest").start();
-        try {
+//        try {
             span.setTag("get_project_id", 11);
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
 
             return oTeleService.getOpenTelemetry(span);
-
-        }
-        finally {
-            span.finish();
-        }
+//        }
+//        finally {
+//            span.finish();
+//        }
 
     }
 

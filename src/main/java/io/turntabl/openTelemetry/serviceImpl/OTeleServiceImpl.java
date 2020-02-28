@@ -19,6 +19,7 @@ public class OTeleServiceImpl {
             ChildSpan1 = tracer.buildSpan("ChildOfHttp").start();
             ChildSpan1.setTag("get_child_project_id", 11.1);
             System.out.println("..................");
+            incomingSpan.finish();
             return "Hey from OpenTelemetry :)";
 
         } finally {
