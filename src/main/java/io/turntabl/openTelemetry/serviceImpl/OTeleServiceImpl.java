@@ -18,11 +18,11 @@ public class OTeleServiceImpl {
         try (Scope scope = tracer.activateSpan(incomingSpan)) {
             ChildSpan1 = tracer.buildSpan("ChildOfHttp").start();
             ChildSpan1.setTag("get_child_project_id", 11.1);
-            System.out.println("..................");
-            incomingSpan.finish();
+            System.out.println("......i do some work here.........");
             return "Hey from OpenTelemetry :)";
 
         } finally {
+            incomingSpan.finish();
             ChildSpan1.finish();
         }
     }
