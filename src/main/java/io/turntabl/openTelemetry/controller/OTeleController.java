@@ -1,22 +1,13 @@
 package io.turntabl.openTelemetry.controller;
 
-import io.opentelemetry.context.Scope;
-import io.opentelemetry.sdk.trace.SpanProcessor;
-//import io.opentracing.Span;
-//import io.opentracing.Scope;
+import io.opentracing.Scope;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
-import io.opentracing.log.Fields;
-import io.opentracing.tag.Tags;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
-//import io.turntabl.openTelemetry.config.OTConfig;
 import io.turntabl.openTelemetry.serviceImpl.OTeleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @Api
 @RestController
@@ -30,15 +21,24 @@ public class OTeleController {
 
     @GetMapping("api/v1/ot")
     public String getOpenTracing() {
-        Span span = tracer.buildSpan("someWork").start();
-        try (Scope ignored = (Scope) tracer.scopeManager().activate(span)) {
-            // Do things.
-        } catch(Exception ex) {
-//            Tags.ERROR.set(span, true);
-//            span.log("....");
-        } finally {
-            span.finish();
-        }
+
+        Span span = tracer.buildSpan("getOpenTracing").start();
+        span.setTag("get_project_id", 11);
+
+        Span ChildSpan1 = tracer.buildSpan("getOpenTracingChild-1").asChildOf(span).start();
+        ChildSpan1.setTag("get_child_project_id", 11.1);
+        ChildSpan1.finish();
+
+        Span ChildSpan2 = tracer.buildSpan("getOpenTracingChild-2").asChildOf(ChildSpan1).start();
+        ChildSpan2.setTag("get_child_project_id", 11.12);
+        ChildSpan2.finish();
+
+        Span fSpan = tracer.buildSpan("getOpenTracingChild-fSpan").asChildOf(ChildSpan2).start();
+        fSpan.setTag("get_child_project_id", 11.2);
+        fSpan.finish();
+
+        span.finish();
+
         return oTeleService.getOpenTelemetry();}
 
     @GetMapping("api/v1/noot")
