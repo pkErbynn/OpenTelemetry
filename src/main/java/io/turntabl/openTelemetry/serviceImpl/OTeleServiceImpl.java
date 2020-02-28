@@ -27,8 +27,8 @@ public class OTeleServiceImpl {
         }
     }
 
-    public String getTracingWithoutTryBlock(Span iSpan){
-        Span ChildSpan1 = tracer.buildSpan("getOpenTracingWithoutTryBlock-B").asChildOf(iSpan).start();
+    public String getTracingWithoutTryBlock(Span rootSpan){
+        Span ChildSpan1 = tracer.buildSpan("getOpenTracingWithoutTryBlock-B").asChildOf(rootSpan).start();
         ChildSpan1.setTag("get_child_project_id", 11.1);
         System.out.println("........");
 
@@ -36,7 +36,7 @@ public class OTeleServiceImpl {
         ChildSpan2.setTag("get_child_project_id", 11.1);
         System.out.println(".......");
 
-        iSpan.finish();     // root span closes first followed by the subs accordingly
+        rootSpan.finish();     // root span closes first followed by the subs accordingly
         ChildSpan1.finish();
         ChildSpan2.finish();
 
